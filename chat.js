@@ -1,6 +1,6 @@
 const express = require('express');
-const { getDb } = require('../db');
-const { getIo } = require('../socket');
+const { getDb } = require('./db');
+const { getIo } = require('./socket');
 const router = express.Router();
 
 // Получение списка чатов
