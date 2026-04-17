@@ -12,6 +12,7 @@ const storiesRoutes = require('./routes/stories');
 const socialRoutes = require('./routes/social');
 const settingsRoutes = require('./routes/settings');
 const path = require('path');
+const { requireAuth } = require('./middleware/auth');
 
 const http = require('http');
 const { initSocket } = require('./socket');
@@ -26,13 +27,13 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
-app.use('/api/profile', profileRoutes);
-app.use('/api/chat', chatRoutes);
-app.use('/api/keys', keysRoutes);
-app.use('/api/upload', uploadRoutes);
-app.use('/api/stories', storiesRoutes);
-app.use('/api/social', socialRoutes);
-app.use('/api/settings', settingsRoutes);
+app.use('/api/profile', requireAuth, profileRoutes);
+app.use('/api/chat', requireAuth, chatRoutes);
+app.use('/api/keys', requireAuth, keysRoutes);
+app.use('/api/upload', requireAuth, uploadRoutes);
+app.use('/api/stories', requireAuth, storiesRoutes);
+app.use('/api/social', requireAuth, socialRoutes);
+app.use('/api/settings', requireAuth, settingsRoutes);
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
